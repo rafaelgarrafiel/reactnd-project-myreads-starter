@@ -28,6 +28,11 @@ class ListPage extends Component {
                                 updateBook={updateBook}
                                 books={books.filter(book => (book.shelf ==="read"))}>
                             </BookShelf>
+                            <BookShelf
+                                title="None"
+                                updateBook={updateBook}
+                                books={books.filter(book => (book.shelf === "none"))}>
+                            </BookShelf>
                         </div>
                     </div>
                     <div className="open-search">

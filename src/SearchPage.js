@@ -1,30 +1,20 @@
 import React, { Component } from "react";
 import {Link} from 'react-router-dom'
-import escapeRegExp from 'escape-string-regexp'
 import Book from "./Book";
 
 class SearchPage extends Component {
     state = {
         query: ''
     }
-    
+
     updateQuery = (query) => {
         this.setState({ query: query.trim() })
-    }
+        this.props.searchBook(query)
+    } 
 
     render(){
-        const { books, updateBook } = this.props
+        const { updateBook, showningBooks } = this.props
         const { query } = this.state
-        let showningBooks
-        if (query) {
-            const match = new RegExp(escapeRegExp(query), 'i')
-            showningBooks = books.filter((book) => ( 
-                match.test(book.title)  ||
-                match.test(book.authors.map(author=>author))  
-            ))
-        } else {
-            showningBooks = books
-        }
 
         return(
             <div>
@@ -48,9 +38,9 @@ class SearchPage extends Component {
                                 ))}
                             </ol>
                         )}
-                        {showningBooks.length !== books.length && (
+                        {showningBooks.length === 0 && query && (
                             <div className="search-books-results">
-                                <span>Exibindo {showningBooks.length} de {books.length} Livros</span>
+                                <span>Exibindo {showningBooks.length} Livros</span>
                             </div>
                         )}
                     </div>
