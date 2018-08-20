@@ -85,6 +85,11 @@ body, .app {
   outline: none;
 }
 
+.search-books-results {
+  text-align: center;
+  margin: 20px 0;
+}
+
 .close-search {
   display: block;
   top: 20px;

@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import {Link} from 'react-router-dom'
 import escapeRegExp from 'escape-string-regexp'
 import Book from "./Book";
-// import sortyBy from 'sort-by'
 
 class SearchPage extends Component {
     state = {
@@ -14,16 +13,18 @@ class SearchPage extends Component {
     }
 
     render(){
-        const { books } = this.props
+        const { books, updateBook } = this.props
         const { query } = this.state
         let showningBooks
         if (query) {
             const match = new RegExp(escapeRegExp(query), 'i')
-            showningBooks = books.filter((book) => match.test(book.title))
+            showningBooks = books.filter((book) => ( 
+                match.test(book.title)  ||
+                match.test(book.authors.map(author=>author))  
+            ))
         } else {
             showningBooks = books
         }
-        console.log(showningBooks)
 
         return(
             <div>
@@ -42,10 +43,15 @@ class SearchPage extends Component {
                             <ol className="books-grid">
                                 {showningBooks.map((book) => (
                                     <li key={book.id}>
-                                        <Book book={book} updateBook={this.props.updateBook}></Book>
+                                        <Book book={book} updateBook={updateBook}></Book>
                                     </li>
                                 ))}
                             </ol>
+                        )}
+                        {showningBooks.length !== books.length && (
+                            <div className="search-books-results">
+                                <span>Exibindo {showningBooks.length} de {books.length} Livros</span>
+                            </div>
                         )}
                     </div>
                 </div>
