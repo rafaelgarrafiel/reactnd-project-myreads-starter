@@ -18,10 +18,14 @@ class BooksApp extends React.Component {
 
 
   updateBook = (book, shelf) => {
-    BooksAPI.update(book, shelf).then(() => {
-      book.shelf = shelf;
+    BooksAPI.update(book, shelf).then((data) => {
+
+      const updatedBook = {
+        ...book,
+        shelf
+      }
       this.setState(state => ({
-        books: state.books.filter(b => b.id !== book.id).concat([book])
+        books: state.books.filter(b => b.id !== updatedBook.id).concat([updatedBook])
       }))
     })
   }

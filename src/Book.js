@@ -1,8 +1,13 @@
 import React, { Component } from "react";
 
 class Book extends Component {
+
+    updateBook = (book, shelf) => {
+        this.props.updateBook(book, shelf)
+    }
+
     render(){
-        const { book, updateBook } = this.props
+        const { book } = this.props
         let thumbnail
         if (book.imageLinks) {
             thumbnail = book.imageLinks.thumbnail
@@ -13,7 +18,7 @@ class Book extends Component {
                     <div className="book-top">
                         <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${thumbnail})` }}></div>
                         <div className="book-shelf-changer">
-                            <select value={book.shelf} onChange={(e)=>{updateBook(book, e.target.value)}}>
+                            <select value={book.shelf} onChange={(e)=>{this.updateBook(book, e.target.value)}}>
                                 <option value="move" disabled>Move to...</option>
                                 <option value="currentlyReading">Currently Reading</option>
                                 <option value="wantToRead">Want to Read</option>
